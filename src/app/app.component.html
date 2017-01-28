@@ -14,13 +14,16 @@
         <div class="nav navbar-nav">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">All</a></li>
-                <li><a href="#">My Pins</a></li>
-                <li><a href="#">Add new Pin</a></li>
+                <li *ngIf="auth.isAuthenticated()"><a href="#">My Pins</a></li>
+                <li *ngIf="auth.isAuthenticated()"><a href="#">Add new Pin</a></li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-right">
-            <a class="btn btn-default navbar-btn">
+            <a class="btn btn-primary navbar-btn" *ngIf="!auth.isAuthenticated()" (click)="auth.login()">
                 Sign In
+            </a>
+            <a class="btn btn-warning navbar-btn" *ngIf="auth.isAuthenticated()" (click)="auth.logout()">
+                Sign Out
             </a>
         </div>
     </div>

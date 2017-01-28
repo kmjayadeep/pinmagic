@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {PinService} from '../pin.service'
+import {PinService} from '../services/pin.service'
 
 @Component({
 	selector: 'app-pins',
@@ -13,7 +13,7 @@ export class PinsComponent implements OnInit {
 	constructor(private pinService:PinService) { }
 
 	ngOnInit() {
-		this.pinService.getAllPins().subscribe(pins=>{
+		this.pinService.getAllPins().then(pins=>{
 			this.pins = pins
 			console.log(pins)
 		})

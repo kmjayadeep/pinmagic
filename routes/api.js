@@ -1,17 +1,23 @@
 const express = require('express')
 const router = express.Router()
+const jwt = require('express-jwt')
+const config = require('../config.json')
+
+const authCheck = new jwt(config.jwt)
 
 router.get('/', (req, res) => {
     res.send('works')
 })
 
-router.get('/posts', (req, res) => {
+router.get('/pins', (req, res) => {
     res.json([{
-        title: 'jaba',
-        body: 'adsaddsdsad'
+        id: '43441324',
+        url: 'http:/dsds',
+        description: 'http:/dsds'
     }, {
-        title: 'jaba2',
-        body: 'adsadddasdadssdsad'
+        id: '43441324',
+        url: 'http:/dsds',
+        description: 'http:/dsds'
     }])
 })
 
