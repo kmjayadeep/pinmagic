@@ -14,8 +14,20 @@
         <div class="nav navbar-nav">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">All</a></li>
-                <li *ngIf="auth.isAuthenticated()"><a href="#">My Pins</a></li>
-                <li *ngIf="auth.isAuthenticated()"><a href="#">Add new Pin</a></li>
+                <li *ngIf="auth.isAuthenticated()"><a href="/mypins">My Pins</a></li>
+                <li *ngIf="auth.isAuthenticated()" class="dropdown" [ngClass]="{'open':dropdownOpen}">
+                    <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" role="button" id="newpin" (click)="dropdownOpen = !dropdownOpen">
+                        Add new Pin
+                        <span class="caret"></span>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="newpin">
+                        <form class="add-form" (submit)="send()">
+                            <input type="text" name="url" placeholder="Pic url..." class="form-control" [(ngModel)]="pin.url">
+                            <input type="text" name="desc" placeholder="Pic description..." class="form-control"[(ngModel)]="pin.description">
+                            <button type="submit" class="btn btn-primary btn-block">Send</button>
+                        </form>
+                    </div>
+                </li>
             </ul>
         </div>
         <div class="nav navbar-nav navbar-right">

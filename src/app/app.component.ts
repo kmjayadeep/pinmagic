@@ -9,8 +9,17 @@ import { AuthService } from './services/auth.service'
 })
 export class AppComponent {
 
-	constructor(private auth:AuthService){
+	private dropdownOpen:boolean = false
+	private pin:any = {
+		url:'',
+		description:''
+	}
 
+	constructor(private auth:AuthService){}
+
+	public send(){
+		this.dropdownOpen = false
+		console.log(this.pin)
 	}
 
 }

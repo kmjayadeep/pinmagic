@@ -3,10 +3,13 @@ const path = require('path')
 const http = require('http')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-
+const mongoose = require('mongoose')
+const config = require('./config.json')
 const api = require('./routes/api')
 
 const app = express()
+
+mongoose.connect(config.mongo)
 
 app.use(cors())
 app.use(bodyParser.json())

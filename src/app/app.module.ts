@@ -28,15 +28,15 @@ const ROUTES = [
 
 @NgModule({
   declarations: [
-  AppComponent,
-  PinsComponent,
-  MyPinsComponent
+    AppComponent,
+    PinsComponent,
+    MyPinsComponent
   ],
   imports: [
-  BrowserModule,
-  FormsModule,
-  HttpModule,
-  RouterModule.forRoot(ROUTES)
+    BrowserModule,
+    FormsModule,
+    HttpModule,
+    RouterModule.forRoot(ROUTES)
   ],
   providers: [PinService, AuthService],
   bootstrap: [AppComponent]
