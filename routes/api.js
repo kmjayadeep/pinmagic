@@ -73,4 +73,24 @@ router.get('/pins', (req, res) => {
         })
 })
 
+router.get('/mypins', authCheck, (req, res) => {
+    User.findOne({
+            'userId': req.user.sub
+        }).exec()
+        .then(u => {
+            if (!u)
+                throw 'error'
+            return Pin.find({
+                    user: u._id
+                })
+                .exec()
+        })
+        .then(pins => {
+            res.json(pin)
+        })
+        .catch(err => {
+            res.status(400).json(err)
+        })
+})
+
 module.exports = router

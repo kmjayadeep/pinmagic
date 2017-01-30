@@ -23,6 +23,7 @@ export class AppComponent {
 		this.pinService.addPin(this.pin)
 		.then(pin=>{
 			console.log(pin)
+			this.pin = {url:'',description:''}
 		}).catch(err=>{})
 	}
 
