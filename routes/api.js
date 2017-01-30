@@ -3,52 +3,74 @@ const router = express.Router()
 const jwt = require('express-jwt')
 const config = require('../config.json')
 const User = require('../models/User')
+const Pin = require('../models/Pin')
 
-const authCheck = new jwt(config.jwt)
+const authCheck = jwt(config.jwt)
 
 router.get('/', (req, res) => {
     res.send('works')
 })
 
 router.post('/signup', (req, res) => {
+    console.log(req.body)
     let user = new User({
         name: req.body.name,
         picture: req.body.picture,
         twitter: {
-            id: req.body.global_client_id
-        }
+            id: req.body.global_client_id,
+        },
+        userId: req.body.user_id
     })
+    console.log(user)
     User.findOne({
-        'twitter.id': user.twitter.id
-    }).exec()
-    .then(u=>{
-        if(u)
-            res.json(u)
-        else
-            user
+            'userId': user.userId
+        }).exec()
+        .then(u => {
+            if (u)
+                res.json(u)
+            else
+                user
                 .save()
-                .then((us)=>{
+                .then((us) => {
                     res.json(us)
                 })
-                .catch(err=>{
+                .catch(err => {
                     res.status(400).json(err)
                 })
-    })
-    .catch(err=>{
-        res.status(400).json(err)
-    })
+        })
+        .catch(err => {
+            res.status(400).json(err)
+        })
+})
+
+router.post('/pin', authCheck, (req, res) => {
+    let pin = new Pin(req.body)
+    User.findOne({
+            'userId': req.user.sub
+        }).exec()
+        .then(u => {
+            if (!u)
+                throw 'error'
+            pin.user = u._id
+            return pin.save()
+        })
+        .then(pin => {
+            res.json(pin)
+        })
+        .catch(err => {
+            res.status(400).json(err)
+        })
 })
 
 router.get('/pins', (req, res) => {
-    res.json([{
-        id: '43441324',
-        url: 'http:/dsds',
-        description: 'http:/dsds'
-    }, {
-        id: '43441324',
-        url: 'http:/dsds',
-        description: 'http:/dsds'
-    }])
+    Pin.find({})
+        .populate('user')
+        .exec()
+        .then(pins => {
+            res.json(pins)
+        }).catch(err => {
+            res.status(400).json(err)
+        })
 })
 
 module.exports = router

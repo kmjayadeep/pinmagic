@@ -28,6 +28,11 @@ const port = process.env.PORT || '3000'
 
 app.set('port',port)
 
+app.use((err,req,res,next)=>{
+	console.log(err)
+	next()
+})
+
 const server = http.createServer(app)
 
 server.listen(port,()=>{

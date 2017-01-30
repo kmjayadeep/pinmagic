@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule ,Http,RequestOptions} from '@angular/http';
 import { RouterModule } from '@angular/router'
 // import { AUTH_PROVIDERS } from 'angular2-jwt';
 
@@ -12,6 +12,14 @@ import { MyPinsComponent } from './my-pins/my-pins.component';
 
 import { PinService } from './services/pin.service'
 import { AuthService } from './services/auth.service'
+
+import {AuthHttp,AuthConfig} from 'angular2-jwt'
+
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig(), http, options);
+}
+
 
 const ROUTES = [
 {
@@ -38,7 +46,11 @@ const ROUTES = [
     HttpModule,
     RouterModule.forRoot(ROUTES)
   ],
-  providers: [PinService, AuthService],
+  providers: [PinService, AuthService,{
+    provide:AuthHttp,
+    useFactory:authHttpServiceFactory,
+    deps:[Http,RequestOptions]
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

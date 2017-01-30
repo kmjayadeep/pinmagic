@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service'
+import { PinService } from './services/pin.service'
 
 @Component({
 	selector: 'app-root',
@@ -15,11 +16,14 @@ export class AppComponent {
 		description:''
 	}
 
-	constructor(private auth:AuthService){}
+	constructor(private auth:AuthService,private pinService:PinService){}
 
 	public send(){
 		this.dropdownOpen = false
-		console.log(this.pin)
+		this.pinService.addPin(this.pin)
+		.then(pin=>{
+			console.log(pin)
+		}).catch(err=>{})
 	}
 
 }
