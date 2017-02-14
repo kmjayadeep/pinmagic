@@ -29,6 +29,14 @@ export class PinService {
       .catch(this.handleError)
   }
 
+  star(pinId){
+    return this.authHttp
+      .get('/api/pin/star/'+pinId)
+      .toPromise()
+      .then(response=>response.json())
+      .catch(this.handleError)
+  }
+
   private handleError(error:any){
   	console.log(error)
   	return Promise.reject(error)

@@ -11,10 +11,14 @@ declare var Masonry
 export class PinsComponent implements OnInit{
 
 	pins:any = []
+	userId = ''
 
 	constructor(private pinService:PinService) { }
 
 	ngOnInit() {
+		if(localStorage['profile']){
+			this.userId = JSON.parse(localStorage['profile'])._id
+		}
 		this.pinService.getAllPins().then(pins=>{
 			this.pins = pins
 			console.log(pins)
@@ -24,13 +28,24 @@ export class PinsComponent implements OnInit{
 
 	initMasonry(){
 		var elem = document.querySelector('.grid');
-		console.log(elem)
+		// console.log(elem)
 		var msnry = new Masonry( elem, {
 		  // options
 		  itemSelector: '.grid-item',
 		  columnWidth: 200
 		});
-		console.log(msnry)
+		// console.log(msnry)
+	}
+
+	toggleStar(pinId){
+		this.pinService.star(pinId).then((p)=>{
+			this.pins = this.pins.map(pin=>{
+				if(pin._id==p._id)
+					pin.stars = p.stars
+				return pin
+			})
+			setTimeout(this.initMasonry,1000)
+		})
 	}
 
 }

@@ -62,6 +62,33 @@ router.post('/pin', authCheck, (req, res) => {
         })
 })
 
+router.get('/pin/star/:pinId', authCheck, (req, res) => {
+    var userId
+    User.findOne({
+            'userId': req.user.sub
+        }).exec()
+        .then(u => {
+            if (!u)
+                throw 'error'
+            userId = u._id
+            return Pin.findById(req.params.pinId).exec()
+        })
+        .then(pin => {
+            if(pin.stars.indexOf(userId)!=-1){
+                pin.stars = pin.stars.filter(uId=>uId+''!=userId+'')
+            }else{
+                pin.stars.push(userId)
+            }
+            return pin.save()
+        })
+        .then(pin=>{
+            res.json(pin)
+        })
+        .catch(err => {
+            res.status(400).json(err)
+        })
+})
+
 router.get('/pins', (req, res) => {
     Pin.find({})
         .populate('user')

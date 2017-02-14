@@ -7,7 +7,11 @@
             </div>
             <div class="info">
                 <a href="#"><img [src]="pin.user.picture"></a>
-                <div class="like btn btn-default btn-sm"><span class="glyphicon glyphicon-star" aria-hidden="true"></span><span>&nbsp;</span><span>1</span></div>
+                <div class="like btn btn-default btn-sm" (click)="toggleStar(pin._id)">
+                    <span class="glyphicon glyphicon-star" [ngClass]="{'starred':pin.stars.indexOf(userId)>=0 }" aria-hidden="true"></span>
+                    <span>&nbsp;</span>
+                    <span>{{pin.stars.length}}</span>
+                </div>
             </div>
         </div>
     </div>

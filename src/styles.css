@@ -51,3 +51,7 @@ body {
 .grid-item .info .liked {
     color: rgb(65, 131, 215);
 }
+
+.starred{
+    color:#286090;
+}

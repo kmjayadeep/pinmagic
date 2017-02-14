@@ -6,7 +6,11 @@ var schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user'
-    }
+    },
+    stars: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    }]
 })
 
 module.exports = mongoose.model('pin', schema)
