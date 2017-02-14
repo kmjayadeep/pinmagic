@@ -21,6 +21,8 @@
         "styles.css"
       ],
       "scripts": [
+        "assets/js/masonry.min.js",
+        "assets/js/main.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
