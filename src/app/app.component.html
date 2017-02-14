@@ -13,8 +13,8 @@
         </div>
         <div class="nav navbar-nav">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">All</a></li>
-                <li *ngIf="auth.isAuthenticated()"><a href="/mypins">My Pins</a></li>
+                <li class="change-to-active"><a href="#" [routerLink]="['']">All</a></li>
+                <li *ngIf="auth.isAuthenticated()"><a href="#" [routerLink]="['mypins']">My Pins</a></li>
                 <li *ngIf="auth.isAuthenticated()" class="dropdown" [ngClass]="{'open':dropdownOpen}">
                     <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" role="button" id="newpin" (click)="dropdownOpen = !dropdownOpen">
                         Add new Pin

@@ -1,3 +1,21 @@
-<p>
-  my-pins works!
-</p>
+<div class="container">
+    <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 200 }'>
+        <div class="grid-item" *ngFor="let pin of pins">
+            <div class="main-img">
+                <img [src]="pin.url">
+                <p>{{pin.description}}</p>
+            </div>
+            <div class="info">
+                <a href="#"><img [src]="pin.user.picture"></a>
+                <div class="btn btn-default btn-sm"  (click)="removePin(pin._id)">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </div>
+                <div class="like btn btn-default btn-sm" (click)="toggleStar(pin._id)">
+                    <span class="glyphicon glyphicon-star" [ngClass]="{'starred':pin.stars.indexOf(userId)>=0 }" aria-hidden="true"></span>
+                    <span>&nbsp;</span>
+                    <span>{{pin.stars.length}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

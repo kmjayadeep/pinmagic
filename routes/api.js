@@ -43,6 +43,31 @@ router.post('/signup', (req, res) => {
         })
 })
 
+router.delete('/pin/:pinId', authCheck, (req, res) => {
+    var userId
+    User.findOne({
+            'userId': req.user.sub
+        }).exec()
+        .then(u => {
+            if (!u)
+                throw 'error'
+            userId = u._id
+            return Pin.findById(req.params.pinId).exec()
+        })
+        .then(pin => {
+            console.log(pin)
+            return pin.remove()
+        })
+        .then(() => {
+            console.log('removed')
+            res.json(1)
+        })
+        .catch(err => {
+            console.log(err)
+            res.status(400).json(err)
+        })
+})
+
 router.post('/pin', authCheck, (req, res) => {
     let pin = new Pin(req.body)
     User.findOne({
@@ -74,14 +99,14 @@ router.get('/pin/star/:pinId', authCheck, (req, res) => {
             return Pin.findById(req.params.pinId).exec()
         })
         .then(pin => {
-            if(pin.stars.indexOf(userId)!=-1){
-                pin.stars = pin.stars.filter(uId=>uId+''!=userId+'')
-            }else{
+            if (pin.stars.indexOf(userId) != -1) {
+                pin.stars = pin.stars.filter(uId => uId + '' != userId + '')
+            } else {
                 pin.stars.push(userId)
             }
             return pin.save()
         })
-        .then(pin=>{
+        .then(pin => {
             res.json(pin)
         })
         .catch(err => {
@@ -110,10 +135,11 @@ router.get('/mypins', authCheck, (req, res) => {
             return Pin.find({
                     user: u._id
                 })
+                .populate('user')
                 .exec()
         })
         .then(pins => {
-            res.json(pin)
+            res.json(pins)
         })
         .catch(err => {
             res.status(400).json(err)

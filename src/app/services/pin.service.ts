@@ -23,8 +23,16 @@ export class PinService {
   }
 
   getAllPins(){
-  	return this.http
-	  	.get('/api/pins')
+    return this.http
+      .get('/api/pins')
+      .toPromise()
+      .then(response=>response.json() as Pin[])
+      .catch(this.handleError)
+  }
+
+  getMyPins(){
+  	return this.authHttp
+	  	.get('/api/mypins')
 	  	.toPromise()
 	  	.then(response=>response.json() as Pin[])
 	  	.catch(this.handleError)
@@ -41,6 +49,14 @@ export class PinService {
   star(pinId){
     return this.authHttp
       .get('/api/pin/star/'+pinId)
+      .toPromise()
+      .then(response=>response.json())
+      .catch(this.handleError)
+  }
+
+  remove(pinId){
+    return this.authHttp
+      .delete('/api/pin/'+pinId)
       .toPromise()
       .then(response=>response.json())
       .catch(this.handleError)
