@@ -13,7 +13,11 @@ export class PinsComponent implements OnInit{
 	pins:any = []
 	userId = ''
 
-	constructor(private pinService:PinService) { }
+	constructor(private pinService:PinService) {
+		pinService.dataChange.subscribe(data=>{
+			this.ngOnInit()
+		})		
+	}
 
 	ngOnInit() {
 		if(localStorage['profile']){

@@ -6,12 +6,21 @@ import { AuthHttp } from 'angular2-jwt';
 import {Pin} from './pin'
 
 import 'rxjs/add/operator/toPromise';
+import {Observable,Observer} from 'rxjs'
 
 
 @Injectable()
 export class PinService {
 
-  constructor(private http:Http,public authHttp: AuthHttp) { }
+  data:any
+  dataChange:Observable<any>
+  observer:Observer<any>;
+
+  constructor(private http:Http,public authHttp: AuthHttp) {
+    this.dataChange = new Observable(ob=>{
+      this.observer = ob;
+    })
+  }
 
   getAllPins(){
   	return this.http

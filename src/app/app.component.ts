@@ -24,6 +24,7 @@ export class AppComponent {
 		.then(pin=>{
 			console.log(pin)
 			this.pin = {url:'',description:''}
+			this.pinService.observer.next(pin)
 		}).catch(err=>{})
 	}
 
