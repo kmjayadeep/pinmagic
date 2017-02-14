@@ -1,6 +1,7 @@
 {
 	"jwt":{
-		"secret":"",
-		"audience":""
-	}
+		"secret":"qGTrzuKcWjq4xZBqWO29Jo43zWDoEljtdCCTyZz-HXo1Mjdw1rKQiMOSU6-ikqDI",
+		"audience":"5g6B7beJ7gd9Ubj59WAL5hBqUqo09yTj"
+	},
+	"mongo":"mongodb://localhost/pinmagic"
 }
